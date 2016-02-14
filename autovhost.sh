@@ -135,6 +135,13 @@ function helper() {
 
 }
 
+if [ "$(whoami)" != 'root' ]; then
+    printf "\e[39;41m
+   \n You have no permission to run $0 as non-root user. Use sudo
+   \e[0m\n\n"
+    exit 1;
+fi
+
 while getopts "fvho:n:p:r:" G_OPTION
 do
     case $G_OPTION in
@@ -196,5 +203,11 @@ else
    \e[0m\n\n'
 fi
 
+printf "\e[30;42m
+\n Complete! You now have a new Virtual Host
+\e[0m\n\n"
+
 sudo service php5-fpm restart
 sudo service nginx restart
+
+exit 1

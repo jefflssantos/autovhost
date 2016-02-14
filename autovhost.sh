@@ -52,6 +52,8 @@ function createVHost() {
     \n VIRTUAL HOST CREATED | >> $SITE_NAME <<
     \e[0m\n\n"
 
+    OK=true
+
 }
 
 function deleteVHost() {
@@ -69,6 +71,8 @@ function enableVHost() {
     printf "\e[30;42m
     \n VIRTUAL HOST ENABLED | >> $SITE_NAME <<
     \e[0m\n\n"
+
+    OK=true
 }
 
 function disableVHost() {
@@ -203,11 +207,13 @@ else
    \e[0m\n\n'
 fi
 
-printf "\e[30;42m
-\n Complete! You now have a new Virtual Host
-\e[0m\n\n"
+if [ "$OK" ]; then
+    printf "\e[30;42m
+    \n Complete! You now have a new Virtual Host
+    \e[0m\n\n"
 
-sudo service php5-fpm restart
-sudo service nginx restart
+    sudo service php5-fpm restart
+    sudo service nginx restart
+fi
 
 exit 1

@@ -63,6 +63,8 @@ function deleteVHost() {
     printf "\e[39;41m
     \n VIRTUAL HOST DELETED | >> $SITE_NAME <<
     \e[0m\n\n"
+
+    OK=true
 }
 
 function enableVHost() {
@@ -81,6 +83,8 @@ function disableVHost() {
     printf "\e[30;42m
     \n VIRTUAL HOST DISABLED | >> $SITE_NAME <<
     \e[0m\n\n"
+
+    OK=true
 }
 
 function installPackages() {

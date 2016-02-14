@@ -147,7 +147,7 @@ function helper() {
     echo "      -f force"
     echo "      -r root path                       : default /var/www/html"
     echo "      -p public path                     : default /public"
-    echo "      -q public path without vhost name  : default /public"
+    echo "      -q public path without vhost name"
 
     exit 1
 
@@ -167,7 +167,7 @@ do
             ;;
         v|version)
                 printf '\e[30;42m
-                \n Version 0.1.0 by Jefferson Santos - jeffsantos.com.br
+                \n Version 0.1.1 by Jefferson Santos - jeffsantos.com.br
                 \e[0m\n\n'
             ;;
         f) FORCE=1

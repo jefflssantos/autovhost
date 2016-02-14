@@ -1,5 +1,5 @@
 #!/bin/bash
-/var/www/html//public
+
 function createVHost() {
     D_ROOT="/var/www/html/"
     D_PUBLIC="$SITE_NAME/public"

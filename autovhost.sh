@@ -70,8 +70,6 @@ function deleteVHost() {
     printf "\e[39;41m
     \n VIRTUAL HOST DELETED | >> $SITE_NAME <<
     \e[0m\n\n"
-
-    OK=true
 }
 
 function enableVHost() {
@@ -157,7 +155,7 @@ if [ "$(whoami)" != 'root' ]; then
     printf "\e[39;41m
     \n You have no permission to run $0 as non-root user. Use sudo
     \e[0m\n\n"
-    exit 1;
+    exit 1
 fi
 
 while getopts "fqvho:n:p:r:" G_OPTION
@@ -167,8 +165,9 @@ do
             ;;
         v|version)
                 printf '\e[30;42m
-                \n Version 0.1.1 by Jefferson Santos - jeffsantos.com.br
+                \n Version 0.1.2 by Jefferson Santos - jeffsantos.com.br
                 \e[0m\n\n'
+                exit 1
             ;;
         f) FORCE=1
             ;;
@@ -230,7 +229,7 @@ fi
 
 if [ "$OK" ]; then
     printf "\e[30;42m
-    \n Complete! You now have a new Virtual Host
+    \n COMPLETE! YOU NOW HAVE A NEW VIRTUAL HOST
     \e[0m\n\n"
 
     sudo service php5-fpm restart

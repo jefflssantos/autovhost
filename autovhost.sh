@@ -10,6 +10,11 @@ function createVHost() {
 
     if [ "$PUBLIC" ]; then
         D_PUBLIC=$SITE_NAME$PUBLIC
+
+        if [ "$NO_VHOST_NAME" == 1]; then
+            D_PUBLIC=$PUBLIC
+        fi
+
     fi
 
     if [ "$FORCE" == 1 ]; then
@@ -133,11 +138,14 @@ function helper() {
     echo "Options:"
     echo "      -o [ install (no required -n)| create | delete | enable | disable ]"
     echo "      -n virtual host name"
+    echo "      -v show version app"
+    echo "      -h help"
     echo ""
     echo "Create options:"
     echo "      -f force"
-    echo "      -r root path    : default /var/www/html"
-    echo "      -p public path  : default /public"
+    echo "      -r root path                       : default /var/www/html"
+    echo "      -p public path                     : default /public"
+    echo "      -q public path without vhost name  : default /public"
 
     exit 1
 
@@ -145,17 +153,24 @@ function helper() {
 
 if [ "$(whoami)" != 'root' ]; then
     printf "\e[39;41m
-   \n You have no permission to run $0 as non-root user. Use sudo
-   \e[0m\n\n"
+    \n You have no permission to run $0 as non-root user. Use sudo
+    \e[0m\n\n"
     exit 1;
 fi
 
-while getopts "fvho:n:p:r:" G_OPTION
+while getopts "fqvho:n:p:r:" G_OPTION
 do
     case $G_OPTION in
         h|help) helper
             ;;
+        v|version)
+                printf '\e[30;42m
+                \n Version 0.1.0 by Jefferson Santos - jeffsantos.com.br
+                \e[0m\n\n'
+            ;;
         f) FORCE=1
+            ;;
+        q) NO_VHOST_NAME=1
             ;;
         o) OPTION=$OPTARG
             ;;

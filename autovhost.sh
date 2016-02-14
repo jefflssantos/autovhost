@@ -1,21 +1,23 @@
 #!/bin/bash
-
+/var/www/html//public
 function createVHost() {
-    D_ROOT="/var/www/html"
+    D_ROOT="/var/www/html/"
     D_PUBLIC="$SITE_NAME/public"
-
-    if [ "$ROOT" ]; then
-        D_ROOT=$ROOT
-    fi
 
     if [ "$PUBLIC" ]; then
         D_PUBLIC=$SITE_NAME$PUBLIC
 
-        if [ "$NO_VHOST_NAME" == 1]; then
+        if [ "$NO_VHOST_NAME" == 1 ]; then
             D_PUBLIC=$PUBLIC
         fi
-
     fi
+
+    if [ "$ROOT" ]; then
+        D_ROOT="$ROOT/"
+    fi
+
+    T_ROOT=$D_ROOT$D_PUBLIC;
+    F_ROOT=${T_ROOT//\/\//\/}
 
     if [ "$FORCE" == 1 ]; then
         sudo rm -r /etc/nginx/sites-available/$SITE_NAME
@@ -28,7 +30,7 @@ function createVHost() {
 
                     sendfile off;
 
-                    root $D_ROOT/$D_PUBLIC;
+                    root $F_ROOT;
                     index index.php index.html;
 
                     location / {
@@ -39,7 +41,7 @@ function createVHost() {
 
                     error_page 500 502 503 504 /50x.html;
                     location = /50x.html {
-                        root $D_ROOT/$D_PUBLIC;
+                        root $F_ROOT;
                     }
 
                     location ~ \.php$ {
@@ -51,7 +53,8 @@ function createVHost() {
                     }
                 }";
 
-    echo "$TEMPLATE" >> /etc/nginx/sites-available/$SITE_NAME;
+    # echo "$TEMPLATE" >> /etc/nginx/sites-available/$SITE_NAME;
+    echo "$TEMPLATE" >> $SITE_NAME;
 
     printf "\e[30;42m
     \n VIRTUAL HOST CREATED | >> $SITE_NAME <<

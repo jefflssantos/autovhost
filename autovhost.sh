@@ -17,35 +17,36 @@ function createVHost() {
         sudo rm -r /etc/nginx/sites-enabled/$SITE_NAME
     fi
 
-    echo
-        "server {
-            listen  80;
-            server_name $SITE_NAME;
+     TEMPLATE="server {
+                    listen  80;
+                    server_name $SITE_NAME;
 
-            sendfile off;
+                    sendfile off;
 
-            root $D_ROOT/$D_PUBLIC;
-            index index.php index.html;
+                    root $D_ROOT/$D_PUBLIC;
+                    index index.php index.html;
 
-            location / {
-                try_files \$uri \$uri/ /index.php?\$query_string;
-            }
+                    location / {
+                        try_files \$uri \$uri/ /index.php?\$query_string;
+                    }
 
-            error_page 404 /404.html;
+                    error_page 404 /404.html;
 
-            error_page 500 502 503 504 /50x.html;
-            location = /50x.html {
-                root $D_ROOT/$D_PUBLIC;
-            }
+                    error_page 500 502 503 504 /50x.html;
+                    location = /50x.html {
+                        root $D_ROOT/$D_PUBLIC;
+                    }
 
-            location ~ \.php$ {
-                fastcgi_split_path_info ^(.+\.php)(/.+)$;
-                fastcgi_pass unix:/var/run/php5-fpm.sock;
-                fastcgi_index index.php;
-                fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
-                include fastcgi_params;
-            }
-        }" >> /etc/nginx/sites-available/$SITE_NAME
+                    location ~ \.php$ {
+                        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+                        fastcgi_pass unix:/var/run/php5-fpm.sock;
+                        fastcgi_index index.php;
+                        fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
+                        include fastcgi_params;
+                    }
+                }";
+
+    echo "$TEMPLATE" >> /etc/nginx/sites-available/$SITE_NAME;
 
     printf "\e[30;42m
     \n VIRTUAL HOST CREATED | >> $SITE_NAME <<

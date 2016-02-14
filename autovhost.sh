@@ -53,8 +53,7 @@ function createVHost() {
                     }
                 }";
 
-    # echo "$TEMPLATE" >> /etc/nginx/sites-available/$SITE_NAME;
-    echo "$TEMPLATE" >> $SITE_NAME;
+    echo "$TEMPLATE" >> /etc/nginx/sites-available/$SITE_NAME;
 
     printf "\e[30;42m
     \n VIRTUAL HOST CREATED | >> $SITE_NAME <<
